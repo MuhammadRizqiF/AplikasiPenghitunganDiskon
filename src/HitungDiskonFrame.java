@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,8 +17,26 @@ public class HitungDiskonFrame extends javax.swing.JFrame {
     /**
      * Creates new form HitungDiskonFrame
      */
+    private double hargaAsli = 0;
+    private double diskonPersen = 0;
+    private double diskonKupon = 0;
     public HitungDiskonFrame() {
         initComponents();
+        setLocationRelativeTo(null); // Tengah layar
+
+    // Set slider
+    sliderDiskon.setMajorTickSpacing(10);
+    sliderDiskon.setPaintTicks(true);
+    sliderDiskon.setPaintLabels(true);
+
+    // Isi combo diskon
+    cmbDiskon.addItem("0%");
+    cmbDiskon.addItem("5%");
+    cmbDiskon.addItem("10%");
+    cmbDiskon.addItem("15%");
+    cmbDiskon.addItem("20%");
+    cmbDiskon.addItem("25%");
+    cmbDiskon.addItem("50%");
     }
 
     /**
@@ -27,21 +48,186 @@ public class HitungDiskonFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblHarga = new javax.swing.JLabel();
+        txtHarga = new javax.swing.JTextField();
+        lblDiskon = new javax.swing.JLabel();
+        cmbDiskon = new javax.swing.JComboBox<>();
+        lblKupon = new javax.swing.JLabel();
+        txtKupon = new javax.swing.JTextField();
+        lblDiskonSlider = new javax.swing.JLabel();
+        sliderDiskon = new javax.swing.JSlider();
+        btnHitung = new javax.swing.JButton();
+        lblHargaAkhir = new javax.swing.JLabel();
+        lblPenghematan = new javax.swing.JLabel();
+        scrollHistory = new javax.swing.JScrollPane();
+        txtRiwayat = new javax.swing.JTextArea();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblHarga.setText("Harga Asli");
+
+        lblDiskon.setText("Diskon (%)");
+
+        cmbDiskon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0%", "5%", "10%", "15%", "20%", "25%", "50%" }));
+        cmbDiskon.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDiskonItemStateChanged(evt);
+            }
+        });
+
+        lblKupon.setText("Kode Kupon");
+
+        lblDiskonSlider.setText("Pilih Diskon");
+
+        sliderDiskon.setMajorTickSpacing(10);
+        sliderDiskon.setMaximum(50);
+        sliderDiskon.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderDiskonStateChanged(evt);
+            }
+        });
+
+        btnHitung.setText("Hitung");
+        btnHitung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHitungActionPerformed(evt);
+            }
+        });
+
+        lblHargaAkhir.setText("Harga Akhir:");
+
+        lblPenghematan.setText("Penghematan:");
+
+        txtRiwayat.setColumns(20);
+        txtRiwayat.setRows(5);
+        scrollHistory.setViewportView(txtRiwayat);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblHarga, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDiskon))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtHarga)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbDiskon, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnHitung))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblDiskonSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblKupon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sliderDiskon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtKupon)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblHargaAkhir, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(lblPenghematan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(scrollHistory))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHarga)
+                    .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDiskon)
+                    .addComponent(cmbDiskon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHitung))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblKupon)
+                    .addComponent(txtKupon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDiskonSlider)
+                    .addComponent(sliderDiskon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHargaAkhir)
+                    .addComponent(lblPenghematan))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollHistory, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbDiskonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDiskonItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+        String selected = cmbDiskon.getSelectedItem().toString();
+        selected = selected.replace("%", "");
+        diskonPersen = Double.parseDouble(selected);
+    }
+    }//GEN-LAST:event_cmbDiskonItemStateChanged
+
+    private void sliderDiskonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderDiskonStateChanged
+        // TODO add your handling code here:
+        diskonPersen = sliderDiskon.getValue();
+    }//GEN-LAST:event_sliderDiskonStateChanged
+
+    private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
+        // TODO add your handling code here:
+        try {
+        hargaAsli = Double.parseDouble(txtHarga.getText());
+
+        // Baca diskon dari combo (jika slider tidak dipakai)
+        String selected = cmbDiskon.getSelectedItem().toString();
+        selected = selected.replace("%", "");
+        double diskonCombo = Double.parseDouble(selected);
+
+        // Jika slider tidak digeser maka pakai combo
+        if (sliderDiskon.getValue() == 0) {
+            diskonPersen = diskonCombo;
+        }
+
+        // Kupon
+        String kode = txtKupon.getText().trim();
+
+        if (kode.equalsIgnoreCase("HEMAT10")) {
+            diskonKupon = 10;
+        } else if (kode.equalsIgnoreCase("HEMAT20")) {
+            diskonKupon = 20;
+        } else {
+            diskonKupon = 0;
+        }
+
+        double totalDiskon = diskonPersen + diskonKupon;
+
+        if (totalDiskon > 80) totalDiskon = 80;  // batasi maksimal 80%
+
+        double potongan = hargaAsli * (totalDiskon / 100);
+        double hargaAkhir = hargaAsli - potongan;
+
+        lblHargaAkhir.setText("Harga Akhir: " + hargaAkhir);
+        lblPenghematan.setText("Penghematan: " + potongan);
+
+        // Tambahkan ke riwayat
+        txtRiwayat.append(
+            "Harga: " + hargaAsli +
+            " | Diskon: " + totalDiskon + "%" +
+            " | Akhir: " + hargaAkhir + "\n"
+        );
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Input harga harus angka!");
+    }
+    }//GEN-LAST:event_btnHitungActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,5 +255,19 @@ public class HitungDiskonFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHitung;
+    private javax.swing.JComboBox<String> cmbDiskon;
+    private javax.swing.JLabel lblDiskon;
+    private javax.swing.JLabel lblDiskonSlider;
+    private javax.swing.JLabel lblHarga;
+    private javax.swing.JLabel lblHargaAkhir;
+    private javax.swing.JLabel lblKupon;
+    private javax.swing.JLabel lblPenghematan;
+    private javax.swing.JScrollPane scrollHistory;
+    private javax.swing.JSlider sliderDiskon;
+    private javax.swing.JTextField txtHarga;
+    private javax.swing.JTextField txtKupon;
+    private javax.swing.JTextArea txtRiwayat;
     // End of variables declaration//GEN-END:variables
 }
+
